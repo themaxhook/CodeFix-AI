@@ -26,7 +26,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), 10)
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), 10)//10 represents salt factor
 	if err != nil {
 		http.Error(w, "something went wrong", http.StatusInternalServerError)
 		return

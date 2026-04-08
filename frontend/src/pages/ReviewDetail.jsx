@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import api from "../api/axios";
+import ReactMarkdown from "react-markdown"
 
 export default function ReviewDetail() {
   const { id } = useParams();
@@ -52,7 +53,7 @@ export default function ReviewDetail() {
       <div style={{ display: "flex", height: "100vh" }}>
         <Sidebar />
         <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <p style={{ color: "var(--text3)" }}>Loading...</p>
+          <ReactMarkdown style={{ color: "var(--text3)" }}>Loading...</ReactMarkdown>
         </div>
       </div>
     );
@@ -88,7 +89,7 @@ export default function ReviewDetail() {
 
           <div className="detail-section">
             <div className="detail-section-title red">Bug found</div>
-            <p className="detail-text">{review.bug_explanation}</p>
+          <div className="detail-text"><ReactMarkdown>{review.bug_explanation}</ReactMarkdown></div>
           </div>
 
           <div className="detail-section">
@@ -103,7 +104,7 @@ export default function ReviewDetail() {
 
           <div className="detail-section">
             <div className="detail-section-title purple">Suggestions</div>
-            <p className="detail-text">{review.suggestions}</p>
+            <div className="detail-text"><ReactMarkdown>{review.suggestions}</ReactMarkdown></div>
           </div>
 
           <div className="rating-row">

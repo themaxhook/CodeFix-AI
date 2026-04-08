@@ -1,4 +1,4 @@
-package handlers
+package handlers// we always need to write in go in which package/folder it is in
 
 import (
 	"bytes"
@@ -32,9 +32,9 @@ Code to review:
 				},
 			},
 		},
-	}
+	}//building request body to send to gemini api
 
-	bodyBytes, err := json.Marshal(reqBody)
+	bodyBytes, err := json.Marshal(reqBody)//converts go object/map to json bytes format
 	if err != nil {
 		return models.AIResponse{}, err
 	}
@@ -48,13 +48,15 @@ Code to review:
 	}
 	req.Header.Set("Content-Type", "application/json")
 
-	resp, err := http.DefaultClient.Do(req)
+	resp, err := http.DefaultClient.Do(req)//do() sends request to network
 	if err != nil {
-		return models.AIResponse{}, err
+		return models.AIResponse{}, err//returns empty structure and error separately
 	}
-	defer resp.Body.Close()
-
-	respBytes, err := io.ReadAll(resp.Body)
+	defer resp.Body.Close()//close the stream of data and free resources like closing the tap 
+	//if we didn't write defer keyword their might be possibility that it skipped after error occured but defer make sure us that it will
+	//run despite of getting error or response
+	//prevents memory leak, crashing server
+	respBytes, err := io.ReadAll(resp.Body)//read data and store data in bytes
 	if err != nil {
 		return models.AIResponse{}, err
 	}
@@ -67,28 +69,29 @@ Code to review:
 				} `json:"parts"`
 			} `json:"content"`
 		} `json:"candidates"`
-	}
-
-	err = json.Unmarshal(respBytes, &geminiResp)
+	}//go needs structure to fill up the response but in case of nodejs it directly converts json to object
+// Node.js → dynamic (no predefined shape needed)
+// Go → static (must define structure)
+	err = json.Unmarshal(respBytes, &geminiResp)//json bytes to go object
 	if err != nil {
 		return models.AIResponse{}, err
 	}
 
 	if len(geminiResp.Candidates) == 0 || len(geminiResp.Candidates[0].Content.Parts) == 0 {
 		return models.AIResponse{}, fmt.Errorf("no response from gemini: %s", string(respBytes))
-	}
+	}//it checks whether the api returned valid data or not, if not then it returns error rather than crashing
 
 	content := geminiResp.Candidates[0].Content.Parts[0].Text
 	content = strings.TrimPrefix(content, "```json")
 	content = strings.TrimPrefix(content, "```")
 	content = strings.TrimSuffix(content, "```")
 	content = strings.TrimSpace(content)
-
+//It extracts the AI response text and removes unwanted markdown (like ```json) so it becomes clean JSON.
 	var aiResponse models.AIResponse
 	err = json.Unmarshal([]byte(content), &aiResponse)
 	if err != nil {
 		return models.AIResponse{}, fmt.Errorf("could not parse AI response: %v", err)
 	}
-
+//It converts the cleaned JSON string into your final structured Go object and returns it.
 	return aiResponse, nil
 }
