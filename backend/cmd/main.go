@@ -26,7 +26,7 @@ r.Use(cors.Handler(cors.Options{
 	AllowOriginFunc: func(_ *http.Request, origin string) bool {
 		return strings.HasPrefix(origin, "http://localhost:") ||
 			strings.HasPrefix(origin, "http://127.0.0.1:") ||
-			strings.HasPrefix(origin, "https://code-fix-luyex2vcp-axehooks-projects.vercel.app")
+			strings.HasPrefix(origin, "https://code-fix-ai-woad.vercel.app")
 	},
 		AllowedMethods:   []string{"GET", "POST", "PATCH", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type"},
