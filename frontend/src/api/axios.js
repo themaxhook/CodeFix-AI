@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL: "https://codefix-ai-yinx.onrender.com",
 });
 
 // automatically attach token to every request
