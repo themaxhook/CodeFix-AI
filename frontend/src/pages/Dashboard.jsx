@@ -2,7 +2,7 @@ import { useState } from "react";
 import Editor from "@monaco-editor/react";
 import Sidebar from "../components/Sidebar";
 import api from "../api/axios";
-import ReactMarkdown from "react-markdown"
+import ReactMarkdown from "react-markdown";
 
 const LANGUAGES = ["Python", "JavaScript", "TypeScript", "Go", "Java", "C++", "Rust"];
 
@@ -75,7 +75,7 @@ export default function Dashboard() {
         <div style={{ flex: 1, display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", padding: "1rem 1.5rem", overflow: "hidden", minHeight: 0 }}>
 
           {/* left — code input */}
-          <div style={{ display: "flex", flexDirection: "column", background: "var(--bg2)", borderRadius: "12px", border: "1px solid var(--border)", overflow: "hidden", minHeight: 0 }}>
+          <div style={{ display: "flex", flexDirection: "column", background: "#181825", borderRadius: "8px", border: "1px solid #313244", overflow: "hidden", minHeight: 0 }}>
             <div className="panel-header">
               <span className="panel-label">Your code</span>
             </div>
@@ -95,7 +95,7 @@ export default function Dashboard() {
               />
             </div>
             <div className="panel-footer">
-              {error && <ReactMarkdown className="error-msg">{error}</ReactMarkdown>}
+              {error && <p className="error-msg">{error}</p>}
               <button className="btn-primary" onClick={handleAnalyse} disabled={loading}>
                 {loading ? "Analysing..." : "Analyse code"}
               </button>
@@ -103,7 +103,7 @@ export default function Dashboard() {
           </div>
 
           {/* right — ai result */}
-          <div style={{ display: "flex", flexDirection: "column", background: "var(--bg2)", borderRadius: "12px", border: "1px solid var(--border)", overflow: "hidden", minHeight: 0 }}>
+          <div style={{ display: "flex", flexDirection: "column", background: "#181825", borderRadius: "8px", border: "1px solid #313244", overflow: "hidden", minHeight: 0 }}>
             <div className="panel-header">
               <span className="panel-label">AI review</span>
             </div>
@@ -111,14 +111,14 @@ export default function Dashboard() {
             <div style={{ flex: 1, overflowY: "auto", padding: "1rem", display: "flex", flexDirection: "column", gap: "0.875rem", minHeight: 0 }}>
               {!review && !loading && (
                 <div className="empty-state">
-                  <ReactMarkdown>Paste your code and click Analyse</ReactMarkdown>
+                  <p>Paste your code and click Analyse</p>
                 </div>
               )}
 
               {loading && (
                 <div className="empty-state">
                   <div className="spinner"></div>
-                  <ReactMarkdown>Analysing your code...</ReactMarkdown>
+                  <p>Analysing your code...</p>
                 </div>
               )}
 
@@ -129,7 +129,9 @@ export default function Dashboard() {
                       <span className="dot red"></span>
                       Bug found
                     </div>
-                  <div className="review-text"><ReactMarkdown>{review.bug_explanation}</ReactMarkdown></div>
+                    <div className="review-text">
+                      <ReactMarkdown>{review.bug_explanation}</ReactMarkdown>
+                    </div>
                   </div>
 
                   <div className="review-section fix">
@@ -148,7 +150,9 @@ export default function Dashboard() {
                       <span className="dot purple"></span>
                       Suggestions
                     </div>
-                    <div className="review-text"><ReactMarkdown>{review.suggestions}</ReactMarkdown></div>
+                    <div className="review-text">
+                      <ReactMarkdown>{review.suggestions}</ReactMarkdown>
+                    </div>
                   </div>
 
                   <div className="rating-row">
