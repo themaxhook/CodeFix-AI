@@ -17,3 +17,15 @@ CREATE TABLE IF NOT EXISTS reviews (
     is_helpful BOOLEAN,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
+
+-- //create table users(
+--     id text primary,
+--     email text unique not Null
+--     password_hash text not null
+-- )
+
+-- //
+-- create table reviews(
+--     id text primary,
+    
+-- )
