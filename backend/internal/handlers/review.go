@@ -27,7 +27,7 @@ func CreateReview(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	aiResult, err := getAIReview(req.Code, req.Language)
+	aiResult, err := getAIReview(req.Code, req.Language)//game
 	if err != nil {
 		http.Error(w, "failed to get AI review: "+err.Error(), http.StatusInternalServerError)
 		return

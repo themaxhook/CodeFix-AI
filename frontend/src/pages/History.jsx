@@ -110,7 +110,7 @@ export default function History() {
             </div>
           ))}
 
-        </div>
+        3</div>
       </div>
     </div>
   );

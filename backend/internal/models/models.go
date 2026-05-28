@@ -25,7 +25,7 @@ type ReviewRequest struct {
 	Code     string `json:"code"`
 }
 
-// what we parse back from openai
+// what we parse back from gemini
 type AIResponse struct {
 	BugExplanation string `json:"bug_explanation"`
 	FixedCode      string `json:"fixed_code"`
