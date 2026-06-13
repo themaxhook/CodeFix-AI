@@ -37,8 +37,14 @@ r.Use(cors.Handler(cors.Options{
 	r.Post("/auth/register", handlers.Register)
 	r.Post("/auth/login", handlers.Login)
 	r.Get("/health", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("ok"))
-	})
+    _, err := db.DB.Exec("SELECT 1")
+    if err != nil {
+        http.Error(w, "DB unavailable", http.StatusInternalServerError)
+        return
+    }
+
+    w.Write([]byte("ok"))
+})
 
 	// protected routes
 	r.Group(func(r chi.Router) {
