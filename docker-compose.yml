@@ -1,0 +1,25 @@
+services:
+  codefix-client:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: codefix-client
+    restart: unless-stopped
+    networks:
+      - proxy-network
+
+  codefix-server:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: codefix-server
+    restart: unless-stopped
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - PORT=8080
+    networks:
+      - proxy-network
+
+networks:
+  proxy-network:
+    external: true
